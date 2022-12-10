@@ -73,43 +73,7 @@ namespace BudgetProject
             }
 
             return total;
-            //跨月
-            //if (startTime.Month != endDateTime.Month)
-            //{
-            //    int total = 0;
-            //    for (int i = startTime.Month; i <= endDateTime.Month; i++)
-            //    {
-
-            //        if (i == startTime.Month)
-            //        {
-            //            int remainDay = DateTime.DaysInMonth(startTime.Year, startTime.Month);
-            //            total += GetSingleDayBudgetInMonth(startTime.Year, i) * GetSameMonthDays(startTime, new DateTime(startTime.Year, startTime.Month, remainDay));
-            //            Console.WriteLine(GetSingleDayBudgetInMonth(startTime.Year, i) * GetSameMonthDays(startTime, new DateTime(startTime.Year, startTime.Month, remainDay)));
-
-            //        }
-            //        else if (i == endDateTime.Month)
-            //        {
-            //            Console.WriteLine(GetSingleDayBudgetInMonth(startTime.Year, i) * GetSameMonthDays(new DateTime(endDateTime.Year, endDateTime.Month, 1), endDateTime));
-
-            //            total += GetSingleDayBudgetInMonth(startTime.Year, i) * GetSameMonthDays(new DateTime(endDateTime.Year, endDateTime.Month, 1), endDateTime);
-
-            //        }
-            //        else
-            //        {
-            //            Console.WriteLine(GetBudgetByYearMonth(new DateTime(startTime.Year, i, 1)));
-            //           total += GetBudgetByYearMonth(new DateTime(startTime.Year, i, 1));
-
-            //        }
-
-
-            //    }
-
-            //    return total;
-            //}
-
-
-            //單日
-            //return GetSingleDayBudgetInMonth(startTime.Year, startTime.Month) * GetSameMonthDays(startTime, endDateTime);
+            
         }
 
         //起訖錯誤
@@ -122,14 +86,6 @@ namespace BudgetProject
         {
             return endDateTime.Day - startTime.Day + 1;
         }
-
-        //int GetDayRange(DateTime startTime, DateTime endDateTime, DateTime searchMonthDateTime)
-        //{
-        //    int year = searchMonthDateTime.Year;
-        //    int month = searchMonthDateTime.Month;
-
-
-        //}
 
         int GetSingleDayBudgetInMonth(int year, int month)
         {

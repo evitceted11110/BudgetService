@@ -61,7 +61,15 @@ namespace BudgetProject
         }
 
 
+        [Test]
+        public void crossYear()
+        {
+            DateTime startDay = new DateTime(2022, 1, 1);
+            DateTime endDay = new DateTime(2023, 2, 28);
+            decimal result = service.Query(startDay, endDay);
 
+            Assert.AreEqual(31 + 280+62+3000+62000, result);
+        }
 
     }
 }
