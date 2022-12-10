@@ -32,6 +32,13 @@ namespace BudgetProject
                 return 0;
             }
 
+            if ((startTime.Year == endDateTime.Year) && startTime.Month == endDateTime.Month)
+            {
+                //同年同月
+                return GetSingleDayBudgetInMonth(startTime.Year, startTime.Month) *
+                       GetSameMonthDays(startTime, endDateTime);
+            }
+
             DateTime valueDateTime = startTime;
             int total = 0;
             while (valueDateTime <= endDateTime)
