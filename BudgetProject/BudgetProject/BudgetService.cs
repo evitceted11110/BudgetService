@@ -9,20 +9,10 @@ namespace BudgetProject
     {
         private IBudgetRepo repo;
 
-        private Dictionary<string, int> yearMonthBudget;
+        private Dictionary<string, int> yearMonthBudget=new Dictionary<string, int>();
         public BudgetService(IBudgetRepo r)
         {
             repo = r;
-
-            yearMonthBudget = new Dictionary<string, int>();
-            var repoDatas = repo.getAll();
-
-
-            for (int i = 0; i < repoDatas.Count; i++)
-            {
-                yearMonthBudget.Add(repoDatas[i].YearMonth, repoDatas[i].Amount);
-            }
-
         }
 
         public decimal Query(DateTime startTime, DateTime endDateTime)
@@ -32,6 +22,7 @@ namespace BudgetProject
                 return 0;
             }
 
+            UpdateRepoData();
             if ((startTime.Year == endDateTime.Year) && startTime.Month == endDateTime.Month)
             {
                 //同年同月
@@ -74,6 +65,16 @@ namespace BudgetProject
             
         }
 
+        private void UpdateRepoData()
+        {
+            yearMonthBudget.Clear();
+            var repoDatas = repo.getAll();
+
+            foreach (var data in repoDatas)
+            {
+                yearMonthBudget.Add(data.YearMonth, data.Amount);
+            }
+        }
         //起訖錯誤
         bool dateTimeInverseInput(DateTime startTime, DateTime endDateTime)
         {
