@@ -32,43 +32,77 @@ namespace BudgetProject
                 return 0;
             }
 
-            //跨月
-            if (startTime.Month != endDateTime.Month)
+            DateTime valueDateTime = startTime;
+            int total = 0;
+            while (valueDateTime <= endDateTime)
             {
-                int total = 0;
-                for (int i = startTime.Month; i <= endDateTime.Month; i++)
+                int defineYear = valueDateTime.Year;
+                int defineMonth = valueDateTime.Month;
+
+                if (defineMonth == startTime.Month)
+                {
+                    int remainDay = DateTime.DaysInMonth(defineYear, defineMonth);
+                    Console.WriteLine(remainDay);
+                    total += GetSingleDayBudgetInMonth(defineYear, defineMonth) * GetSameMonthDays(startTime, new DateTime(startTime.Year, startTime.Month, remainDay));
+
+                }
+                else if (defineMonth == endDateTime.Month)
                 {
 
-                    if (i == startTime.Month)
-                    {
-                        int remainDay = DateTime.DaysInMonth(startTime.Year, startTime.Month);
-                        total += GetSingleDayBudgetInMonth(startTime.Year, i) * GetSameMonthDays(startTime, new DateTime(startTime.Year, startTime.Month, remainDay));
-                        Console.WriteLine(GetSingleDayBudgetInMonth(startTime.Year, i) * GetSameMonthDays(startTime, new DateTime(startTime.Year, startTime.Month, remainDay)));
+                    total += GetSingleDayBudgetInMonth(defineYear, defineMonth) * GetSameMonthDays(new DateTime(endDateTime.Year, endDateTime.Month, 1), endDateTime);
 
-                    }
-                    else if (i == endDateTime.Month)
-                    {
-                        Console.WriteLine(GetSingleDayBudgetInMonth(startTime.Year, i) * GetSameMonthDays(new DateTime(endDateTime.Year, endDateTime.Month, 1), endDateTime));
+                }
+                else
+                {
+                    total += GetBudgetByYearMonth(new DateTime(defineYear, defineMonth, 1));
 
-                        total += GetSingleDayBudgetInMonth(startTime.Year, i) * GetSameMonthDays(new DateTime(endDateTime.Year, endDateTime.Month, 1), endDateTime);
-
-                    }
-                    else
-                    {
-                        Console.WriteLine(GetBudgetByYearMonth(new DateTime(startTime.Year, i, 1)));
-                       total += GetBudgetByYearMonth(new DateTime(startTime.Year, i, 1));
-
-                    }
-
-                  
                 }
 
-                return total;
+                valueDateTime = new DateTime(
+                    valueDateTime.AddMonths(1).Year,
+                    valueDateTime.AddMonths(1).Month,
+                    1
+                );
             }
+
+            return total;
+            //跨月
+            //if (startTime.Month != endDateTime.Month)
+            //{
+            //    int total = 0;
+            //    for (int i = startTime.Month; i <= endDateTime.Month; i++)
+            //    {
+
+            //        if (i == startTime.Month)
+            //        {
+            //            int remainDay = DateTime.DaysInMonth(startTime.Year, startTime.Month);
+            //            total += GetSingleDayBudgetInMonth(startTime.Year, i) * GetSameMonthDays(startTime, new DateTime(startTime.Year, startTime.Month, remainDay));
+            //            Console.WriteLine(GetSingleDayBudgetInMonth(startTime.Year, i) * GetSameMonthDays(startTime, new DateTime(startTime.Year, startTime.Month, remainDay)));
+
+            //        }
+            //        else if (i == endDateTime.Month)
+            //        {
+            //            Console.WriteLine(GetSingleDayBudgetInMonth(startTime.Year, i) * GetSameMonthDays(new DateTime(endDateTime.Year, endDateTime.Month, 1), endDateTime));
+
+            //            total += GetSingleDayBudgetInMonth(startTime.Year, i) * GetSameMonthDays(new DateTime(endDateTime.Year, endDateTime.Month, 1), endDateTime);
+
+            //        }
+            //        else
+            //        {
+            //            Console.WriteLine(GetBudgetByYearMonth(new DateTime(startTime.Year, i, 1)));
+            //           total += GetBudgetByYearMonth(new DateTime(startTime.Year, i, 1));
+
+            //        }
+
+
+            //    }
+
+            //    return total;
+            //}
 
 
             //單日
-            return GetSingleDayBudgetInMonth(startTime.Year, startTime.Month) * GetSameMonthDays(startTime, endDateTime);
+            //return GetSingleDayBudgetInMonth(startTime.Year, startTime.Month) * GetSameMonthDays(startTime, endDateTime);
         }
 
         //起訖錯誤
