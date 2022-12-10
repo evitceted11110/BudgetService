@@ -39,21 +39,22 @@ namespace BudgetProject
                        GetSameMonthDays(startTime, endDateTime);
             }
 
-            DateTime valueDateTime = startTime;
+            DateTime valueDateTime = new DateTime(startTime.Year, startTime.Month,1);
+            //DateTime valueDateTime = startTime;
             int total = 0;
             while (valueDateTime <= endDateTime)
             {
                 int defineYear = valueDateTime.Year;
                 int defineMonth = valueDateTime.Month;
 
-                if (defineMonth == startTime.Month)
+                if (valueDateTime.ToString("yyyyMM") == startTime.ToString("yyyyMM"))
                 {
                     int remainDay = DateTime.DaysInMonth(defineYear, defineMonth);
                     Console.WriteLine(remainDay);
                     total += GetSingleDayBudgetInMonth(defineYear, defineMonth) * GetSameMonthDays(startTime, new DateTime(startTime.Year, startTime.Month, remainDay));
 
                 }
-                else if (defineMonth == endDateTime.Month)
+                else if (valueDateTime.ToString("yyyyMM") == endDateTime.ToString("yyyyMM"))
                 {
 
                     total += GetSingleDayBudgetInMonth(defineYear, defineMonth) * GetSameMonthDays(new DateTime(endDateTime.Year, endDateTime.Month, 1), endDateTime);
@@ -65,11 +66,8 @@ namespace BudgetProject
 
                 }
 
-                valueDateTime = new DateTime(
-                    valueDateTime.AddMonths(1).Year,
-                    valueDateTime.AddMonths(1).Month,
-                    1
-                );
+                valueDateTime = valueDateTime.AddMonths(1);
+                
             }
 
             return total;
